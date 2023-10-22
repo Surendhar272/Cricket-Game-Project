@@ -1,13 +1,7 @@
 package com.example.cricketgame.controller;
 
-import com.example.cricketgame.model.MatchModel;
-import com.example.cricketgame.model.PlayerModel;
-import com.example.cricketgame.model.ResultSummaryModel;
-import com.example.cricketgame.model.TeamModel;
-import com.example.cricketgame.service.MatchService;
-import com.example.cricketgame.service.PlayerService;
-import com.example.cricketgame.service.ResultSummaryService;
-import com.example.cricketgame.service.TeamService;
+import com.example.cricketgame.model.*;
+import com.example.cricketgame.service.*;
 import com.example.cricketgame.utils.CricketUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -27,14 +21,17 @@ public class MatchController {
 
     private ResultSummaryService resultSummaryService;
 
+    private ScoreBoardService scoreBoardService;
+
     private CricketUtils cricketUtils;
 
     @Autowired
-    public MatchController(TeamService teamService, PlayerService playerService, MatchService matchService, ResultSummaryService resultSummaryService, CricketUtils cricketUtils) {
+    public MatchController(TeamService teamService, PlayerService playerService, MatchService matchService, ResultSummaryService resultSummaryService, ScoreBoardService scoreBoardService, CricketUtils cricketUtils) {
         this.teamService = teamService;
         this.playerService = playerService;
         this.matchService = matchService;
         this.resultSummaryService = resultSummaryService;
+        this.scoreBoardService = scoreBoardService;
         this.cricketUtils = cricketUtils;
     }
 
@@ -59,6 +56,10 @@ public class MatchController {
         return resultSummaryService.recordResultSummary(resultSummaryModel);
     }
 
+    @PostMapping(value = "/postScoreBoard")
+    public ScoreBoardModel postSummary(@RequestBody ScoreBoardModel resultSummaryModel) {
+        return scoreBoardService.recordScoreBoard(resultSummaryModel);
+    }
     @GetMapping(value = "/getScoreCard/{matchId}")
     public Collection<ResultSummaryModel> getScoreCard(@PathVariable Integer matchId) {
         return resultSummaryService.getScoreCard(matchId);
@@ -68,7 +69,5 @@ public class MatchController {
     public void playMatch() {
         cricketUtils.playMatch();
     }
-
-
 
 }

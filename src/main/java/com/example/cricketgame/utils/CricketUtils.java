@@ -15,7 +15,7 @@ public class CricketUtils {
     @Autowired
     private RestTemplate restTemplate;
 
-    private static List<String> TEAM_LIST = new ArrayList<>(Arrays.asList("IND", "PAK"));
+    private static final List<String> TEAM_LIST = new ArrayList<>(Arrays.asList("IND", "PAK"));
 
     private static final List<? super Object> POSSIBLE_DELIVERY_OUTCOME = new ArrayList<>(
             Arrays.asList(0, 1, 2, 3, 4, 5, 6, 'W'));
@@ -35,6 +35,7 @@ public class CricketUtils {
         boardModel.setBallsConsByNonStriker(ballsConsByNonStriker);
         boardModel.setBowlingTeamCode(bowlingTeamCode);
         boardModel.setOvers(overs);
+        restTemplate.postForObject("http://localhost:8083/postScoreBoard", boardModel, ScoreBoardModel.class);
         System.out.println(boardModel);
     }
 
@@ -51,6 +52,7 @@ public class CricketUtils {
                 TeamModel.class);
         TeamModel teamModel1 = response.getBody();
         TEAM_LIST.remove(team1);
+        assert teamModel1 != null;
         System.out.println("Team1 " + teamModel1.getTeamName() + " [OK]");
 
         // Setup TEAM2
@@ -59,6 +61,7 @@ public class CricketUtils {
         String team2 = sc.nextLine();
         response = restTemplate.getForEntity("http://localhost:8083/team/" + team2, TeamModel.class);
         TeamModel teamModel2 = response.getBody();
+        assert teamModel2 != null;
         System.out.println("Team2 " + teamModel2.getTeamName() + " [OK]");
 
         // START MATCH
@@ -69,12 +72,13 @@ public class CricketUtils {
         matchsModel.setTeam2(teamModel2);
         MatchModel responseMatchsModel = restTemplate.postForObject("http://localhost:8083/startMatch", matchsModel,
                 MatchModel.class);
+        assert responseMatchsModel != null;
         matchDbId = responseMatchsModel.getMatchsDbId();
         System.out.println(Objects.nonNull(responseMatchsModel) ? "Match started!"
-                : "Match not started. Some technical issue happened!!!");
+                            : "Match not started. Some technical issue happened!!!");
 
         // Toss
-        TeamModel battingTeamModel = getBattingTeam(new ArrayList<TeamModel>(Arrays.asList(teamModel1, teamModel2)));
+        TeamModel battingTeamModel = getBattingTeam(new ArrayList<>(Arrays.asList(teamModel1, teamModel2)));
         System.out.println(battingTeamModel.getTeamCode() + " won the toss and elected to bat first");
 
         TeamModel bowlingTeamModel = teamModel1.equals(battingTeamModel) ? teamModel2 : teamModel1;
@@ -106,6 +110,7 @@ public class CricketUtils {
                         striker.getScore(), striker.getBallsConsumed(), nonStriker.getPlayerId().getPlayerName(),
                         nonStriker.getScore(), nonStriker.getBallsConsumed(), bowlingTeamModels.get(0).getTeamCode(),
                         oversCompleted);
+
                 if (ballsCompleted != 0 && ballsCompleted % ballsPerOver == 0) {
                     ResultSummaryModel temp;
                     temp = striker;
@@ -145,7 +150,8 @@ public class CricketUtils {
                 }
 
                 ballsCompleted++;
-                oversCompleted = ((ballsCompleted / ballsPerOver) + (ballsCompleted % ballsPerOver) / 10.0f) * 1.0f;
+                oversCompleted = ((ballsCompleted / ballsPerOver) + (ballsCompleted % ballsPerOver) / 10.0f);
+//                oversCompleted = ((ballsCompleted / ballsPerOver) + (ballsCompleted % ballsPerOver) / 10.0f) * 1.0f;
             }
             if (target == 0) {
                 System.out.println(battingTeamModel.getTeamName() + " scored " + teamScore + " runs");

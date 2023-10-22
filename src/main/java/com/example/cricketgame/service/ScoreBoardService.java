@@ -7,6 +7,6 @@ import java.util.Collection;
 
 public interface ScoreBoardService {
 
-
+    public ScoreBoardModel recordScoreBoard(ScoreBoardModel scoreBoardModel);
     public Collection<ScoreBoardModel> getScoreBoard(Integer scoreBoardId);
 }
