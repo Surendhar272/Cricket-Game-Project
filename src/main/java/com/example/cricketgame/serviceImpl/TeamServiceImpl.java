@@ -6,12 +6,13 @@ import com.example.cricketgame.model.TeamModel;
 import com.example.cricketgame.repository.TeamRepository;
 import com.example.cricketgame.service.TeamService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
-@Service
+@Component
 public class TeamServiceImpl implements TeamService {
     private TeamRepository teamRepository;
 
