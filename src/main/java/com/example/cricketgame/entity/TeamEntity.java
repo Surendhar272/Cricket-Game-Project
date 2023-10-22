@@ -1,8 +1,6 @@
 package com.example.cricketgame.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
 
 @Data
@@ -10,14 +8,31 @@ import lombok.*;
 @NoArgsConstructor
 @Getter
 @Setter
-@ToString
 @Entity
+@Table(name = "TEAM")
 public class TeamEntity {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "TEAM_DB_ID")
     private Integer teamId;
+
+    @Column(name = "TEAM_CODE")
     private String teamCode;
+
+    @Column(name = "TEAM_NAME")
     private String teamName;
-    private Integer noOfPlayers;
+
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("TeamEntity [teamDbId=");
+        builder.append(teamId);
+        builder.append(", teamCode=");
+        builder.append(teamCode);
+        builder.append(", teamName=");
+        builder.append(teamName);
+        builder.append("]");
+        return builder.toString();
+    }
 }

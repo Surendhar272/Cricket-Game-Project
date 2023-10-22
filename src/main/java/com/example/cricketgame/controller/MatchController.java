@@ -1,7 +1,5 @@
 package com.example.cricketgame.controller;
 
-import com.example.cricketgame.entity.MatchEntity;
-import com.example.cricketgame.entity.TeamEntity;
 import com.example.cricketgame.model.MatchModel;
 import com.example.cricketgame.model.PlayerModel;
 import com.example.cricketgame.model.ResultSummaryModel;
@@ -40,6 +38,7 @@ public class MatchController {
         this.cricketUtils = cricketUtils;
     }
 
+
     @GetMapping(value = "/team/{teamCode}")
     public TeamModel getTeamByCode(@PathVariable String teamCode) {
         return teamService.getTeamEntityByCode(teamCode);
@@ -51,24 +50,25 @@ public class MatchController {
     }
 
     @PostMapping(value = "/startMatch")
-    public MatchModel startMatch(@RequestBody MatchModel matchModel) {
-        return matchService.startMatch(matchModel);
+    public MatchModel startMatch(@RequestBody MatchModel matchsModel) {
+        return matchService.startMatch(matchsModel);
     }
 
     @PostMapping(value = "/postSummary")
     public ResultSummaryModel postSummary(@RequestBody ResultSummaryModel resultSummaryModel) {
-        return resultSummaryService.recordMatchsSummary(resultSummaryModel);
+        return resultSummaryService.recordResultSummary(resultSummaryModel);
     }
 
-    @GetMapping(value = "/getScoreCard/{matchsDbId}")
-    public Collection<MatchsSummaryModel> getScoreCard(@PathVariable Integer matchsDbId) {
-        return matchsSummaryService.getScoreCard(matchsDbId);
+    @GetMapping(value = "/getScoreCard/{matchId}")
+    public Collection<ResultSummaryModel> getScoreCard(@PathVariable Integer matchId) {
+        return resultSummaryService.getScoreCard(matchId);
     }
 
     @PutMapping(value = "/playMatch")
     public void playMatch() {
         cricketUtils.playMatch();
     }
+
 
 
 }

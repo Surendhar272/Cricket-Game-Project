@@ -9,6 +9,7 @@ import java.util.List;
 @Service
 public interface TeamService {
 
-    public TeamEntity getTeamEntityById(Integer teamId);
+    public TeamEntity getTeamEntityById(Integer teamDbId);
+
     public TeamModel getTeamEntityByCode(String teamCode);
 }
