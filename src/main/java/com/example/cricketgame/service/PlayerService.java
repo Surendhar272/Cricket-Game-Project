@@ -8,4 +8,6 @@ import java.util.Collection;
 @Service
 public interface PlayerService {
    public Collection<PlayerModel> getPlayersByTeamCode(String teamCode);
+
+    public Collection<PlayerModel> getAllPlayers();
 }

@@ -46,6 +46,11 @@ public class MatchController {
         return playerService.getPlayersByTeamCode(request.get("teamCode"));
     }
 
+    @GetMapping(value = "/fetch/players")
+    public Collection<PlayerModel> getAllPlayers() {
+        return playerService.getAllPlayers();
+    }
+
     @PostMapping(value = "/startMatch")
     public MatchModel startMatch(@RequestBody MatchModel matchsModel) {
         return matchService.startMatch(matchsModel);
@@ -63,6 +68,11 @@ public class MatchController {
     @GetMapping(value = "/getScoreCard/{matchId}")
     public Collection<ResultSummaryModel> getScoreCard(@PathVariable Integer matchId) {
         return resultSummaryService.getScoreCard(matchId);
+    }
+
+    @GetMapping(value = "/getScoreBoard")
+    public Collection<ScoreBoardModel> getScoreBoard() {
+        return scoreBoardService.getScoreBoard();
     }
 
     @PutMapping(value = "/playMatch")
