@@ -7,23 +7,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
-import java.util.List;
 import java.util.Map;
 
 @RestController
 public class MatchController {
 
-    private TeamService teamService;
+    private final TeamService teamService;
 
-    private PlayerService playerService;
+    private final PlayerService playerService;
 
-    private MatchService matchService;
+    private final MatchService matchService;
 
-    private ResultSummaryService resultSummaryService;
+    private final ResultSummaryService resultSummaryService;
 
-    private ScoreBoardService scoreBoardService;
+    private final ScoreBoardService scoreBoardService;
 
-    private CricketUtils cricketUtils;
+    private final CricketUtils cricketUtils;
 
     @Autowired
     public MatchController(TeamService teamService, PlayerService playerService, MatchService matchService, ResultSummaryService resultSummaryService, ScoreBoardService scoreBoardService, CricketUtils cricketUtils) {

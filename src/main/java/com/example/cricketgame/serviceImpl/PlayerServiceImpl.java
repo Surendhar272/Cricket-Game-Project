@@ -1,9 +1,7 @@
 package com.example.cricketgame.serviceImpl;
 
 import com.example.cricketgame.entity.PlayerEntity;
-import com.example.cricketgame.entity.ScoreBoardEntity;
 import com.example.cricketgame.model.PlayerModel;
-import com.example.cricketgame.model.ScoreBoardModel;
 import com.example.cricketgame.repository.PlayerRepository;
 import com.example.cricketgame.service.PlayerService;
 import org.springframework.beans.factory.annotation.Autowired;
