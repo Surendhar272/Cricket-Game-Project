@@ -57,10 +57,10 @@ public class ScoreBoardServiceImpl implements ScoreBoardService {
     }
 
     @Override
-    public Collection<ScoreBoardModel> getScoreBoard(Integer scoreBoardId) {
+    public Collection<ScoreBoardModel> getScoreBoard() {
         Collection<ScoreBoardModel> responseModels = new ArrayList<ScoreBoardModel>();
 
-        Collection<ScoreBoardEntity> responseEntitys = scoreBoardRepository.getScoreCard(scoreBoardId);
+        Collection<ScoreBoardEntity> responseEntitys = scoreBoardRepository.findAll();
 
         for(ScoreBoardEntity responseEntity :responseEntitys) {
             ScoreBoardModel responseModel = new ScoreBoardModel();

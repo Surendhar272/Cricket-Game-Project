@@ -1,7 +1,9 @@
 package com.example.cricketgame.serviceImpl;
 
 import com.example.cricketgame.entity.PlayerEntity;
+import com.example.cricketgame.entity.ScoreBoardEntity;
 import com.example.cricketgame.model.PlayerModel;
+import com.example.cricketgame.model.ScoreBoardModel;
 import com.example.cricketgame.repository.PlayerRepository;
 import com.example.cricketgame.service.PlayerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,5 +32,21 @@ public class PlayerServiceImpl implements PlayerService {
             playerModels.add(playerModel);
         }
         return playerModels;
+    }
+
+    @Override
+    public Collection<PlayerModel> getAllPlayers() {
+        Collection<PlayerModel> responseModels = new ArrayList<PlayerModel>();
+
+        Collection<PlayerEntity> playerEntities = playerRepository.findAll();
+
+        for(PlayerEntity responseEntity :playerEntities) {
+            PlayerModel responseModel = new PlayerModel();
+            responseModel.setPlayerId(responseEntity.getPlayerId());
+            responseModel.setTeamId(responseEntity.getTeamId());
+            responseModel.setPlayerName(responseEntity.getPlayerName());
+            responseModels.add(responseModel);
+        }
+        return responseModels;
     }
 }
